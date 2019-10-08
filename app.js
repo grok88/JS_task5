@@ -96,14 +96,13 @@ class InsertInterpolite extends Transform{
 				this.resultHTML += `<div class="col-sm-3 col-xs-6">\
 										<img src="${elem.url}" alt="${elem.name}" class="img-thumbnail">\
 										<div class="info-wrapper">\
-											<div class="text-muted">${elem.name}}</div>\
+											<div class="text-muted">${elem.name}</div>\
 											<div class="text-muted">${elem.params}</div>\
 											<div class="text-muted">${elem.date}</div>\
 										</div>\
 									</div>`; 
 			}
 		});
-		console.log(this.resultHTML);
 		this.elem.innerHTML = this.resultHTML;
 	}
 }
@@ -111,3 +110,43 @@ class InsertInterpolite extends Transform{
 let secondItem = new InsertInterpolite;
 secondItem.insertDom();
 
+// Вставка с помощью DOM
+class InsertElement extends Transform{
+	constructor(){
+		super();
+		this.elem = document.querySelector('#third-line');
+		// this.resultHTML = '';
+		this.item = this.transform();
+	}
+
+	insertDom(){
+		this.item.forEach((elem,index) => {
+			if (index > 6){
+				// create Div
+				let div = document.createElement('div');
+				div.className = 'col-sm-3 col-xs-6';
+				// create img
+				let img = document.createElement('img');
+				img.className = 'img-thumbnail';
+				img.src = `${elem.url}`;
+				img.alt = `${elem.name}`;
+				// append img in div
+				div.append(img);
+				// create nested div
+				let nestedDiv = document.createElement('div');
+				nestedDiv.className = 'info-wrapper';
+				nestedDiv.innerHTML = `<div class="text-muted">${elem.name}</div>\
+										<div class="text-muted">${elem.params}</div>\
+										<div class="text-muted">${elem.date}</div>`;
+				div.append(nestedDiv);
+				console.log(div);
+
+				// append div
+				this.elem.append(div);
+			}
+		});
+	}
+}
+
+let thirdItem = new InsertElement;
+thirdItem.insertDom();
