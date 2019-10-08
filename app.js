@@ -75,11 +75,39 @@ class InsertReplace extends Transform{
 				.replace("$date", elem.date);
 			}
 		});
-		this.elem.innerHTML += this.resultHTML;
+		this.elem.innerHTML = this.resultHTML;
 	}
 }
 
 let firstItem = new InsertReplace;
 firstItem.insertDom();
 
-c
+class InsertInterpolite extends Transform{
+	constructor(){
+		super();
+		this.elem = document.querySelector('#second-line');
+		this.resultHTML = '';
+		this.item = this.transform();
+	}
+
+	insertDom(){
+		this.item.forEach((elem,index) => {
+			if (2 < index && index < 6){
+				this.resultHTML += `<div class="col-sm-3 col-xs-6">\
+										<img src="${elem.url}" alt="${elem.name}" class="img-thumbnail">\
+										<div class="info-wrapper">\
+											<div class="text-muted">${elem.name}}</div>\
+											<div class="text-muted">${elem.params}</div>\
+											<div class="text-muted">${elem.date}</div>\
+										</div>\
+									</div>`; 
+			}
+		});
+		console.log(this.resultHTML);
+		this.elem.innerHTML = this.resultHTML;
+	}
+}
+
+let secondItem = new InsertInterpolite;
+secondItem.insertDom();
+
